@@ -34,12 +34,21 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
-    siteName: SITE_NAME
+    siteName: SITE_NAME,
+    images: [
+      {
+        url: '/images/social_ad_banner.png',
+        width: 1200,
+        height: 630,
+        alt: 'RawByte Tools - 100% Free Image & PDF Suite for Students'
+      }
+    ]
   },
   twitter: {
     card: 'summary_large_image',
     title: SITE_NAME,
-    description: SITE_DESCRIPTION
+    description: SITE_DESCRIPTION,
+    images: ['/images/social_ad_banner.png']
   },
   robots: {
     index: true,
