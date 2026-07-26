@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ALL_TOOLS } from '@/lib/utils/constants';
 import ThemeToggle from './ThemeToggle';
-import { Wrench, Image as ImageIcon, FileText, Search, Menu, X, ChevronDown, GraduationCap } from 'lucide-react';
+import { Wrench, Image as ImageIcon, FileText, Menu, X, ChevronDown, GraduationCap } from 'lucide-react';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -14,12 +14,21 @@ export default function Navbar() {
   const imageTools = ALL_TOOLS.filter((t) => t.category === 'image');
   const pdfTools = ALL_TOOLS.filter((t) => t.category === 'pdf');
 
+  const handleNavClick = () => {
+    setMobileMenuOpen(false);
+    setImageDropdown(false);
+    setPdfDropdown(false);
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-xs transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" onClick={handleNavClick} className="flex items-center gap-2 group">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-500 p-[2px] shadow-sm group-hover:shadow-md transition-all">
               <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
                 <Wrench className="w-5 h-5 text-cyan-600 group-hover:rotate-12 transition-transform" />
@@ -39,6 +48,7 @@ export default function Navbar() {
           <nav className="hidden md:flex items-center gap-1">
             <Link
               href="/"
+              onClick={handleNavClick}
               className="px-3.5 py-2 rounded-xl text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors"
             >
               Home
@@ -63,6 +73,7 @@ export default function Navbar() {
                       <Link
                         key={tool.id}
                         href={`/${tool.slug}`}
+                        onClick={handleNavClick}
                         className="flex items-center justify-between p-2.5 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-cyan-50 border border-transparent transition-all"
                       >
                         <span>{tool.title}</span>
@@ -97,6 +108,7 @@ export default function Navbar() {
                       <Link
                         key={tool.id}
                         href={`/${tool.slug}`}
+                        onClick={handleNavClick}
                         className="flex items-center justify-between p-2.5 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-purple-50 border border-transparent transition-all"
                       >
                         <span>{tool.title}</span>
@@ -114,6 +126,7 @@ export default function Navbar() {
 
             <Link
               href="/exam-form-guide"
+              onClick={handleNavClick}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 transition-all shadow-2xs"
             >
               <GraduationCap className="w-4 h-4 text-amber-700" />
@@ -122,12 +135,14 @@ export default function Navbar() {
 
             <Link
               href="/about"
+              onClick={handleNavClick}
               className="px-3.5 py-2 rounded-xl text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors"
             >
               About
             </Link>
             <Link
               href="/contact"
+              onClick={handleNavClick}
               className="px-3.5 py-2 rounded-xl text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors"
             >
               Contact
@@ -156,21 +171,28 @@ export default function Navbar() {
           <div className="space-y-1">
             <Link
               href="/"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={handleNavClick}
               className="block px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-100"
             >
               Home
             </Link>
             <Link
+              href="/exam-form-guide"
+              onClick={handleNavClick}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-bold text-amber-800 bg-amber-50 hover:bg-amber-100"
+            >
+              <GraduationCap className="w-4 h-4 text-amber-700" /> Exam Form Guide
+            </Link>
+            <Link
               href="/about"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={handleNavClick}
               className="block px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-100"
             >
               About
             </Link>
             <Link
               href="/contact"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={handleNavClick}
               className="block px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-100"
             >
               Contact
@@ -186,7 +208,7 @@ export default function Navbar() {
                 <Link
                   key={tool.id}
                   href={`/${tool.slug}`}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={handleNavClick}
                   className="px-3 py-1.5 rounded-lg text-xs text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                 >
                   {tool.title}
@@ -204,7 +226,7 @@ export default function Navbar() {
                 <Link
                   key={tool.id}
                   href={`/${tool.slug}`}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={handleNavClick}
                   className="px-3 py-1.5 rounded-lg text-xs text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                 >
                   {tool.title}

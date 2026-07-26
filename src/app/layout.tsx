@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import ScrollToTop from '@/components/common/ScrollToTop';
 import Navbar from '@/components/common/Navbar';
 import Footer from '@/components/common/Footer';
 import './globals.css';
@@ -54,6 +55,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="light scroll-smooth">
       <body className={`${inter.className} bg-white text-slate-900 min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white`}>
+        <ScrollToTop />
         <Navbar />
         <div className="flex-1">{children}</div>
         <Footer />
