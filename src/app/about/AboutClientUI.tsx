@@ -47,10 +47,13 @@ export default function AboutClientUI() {
       {/* Founder Profile & Message Card */}
       <div className="p-8 rounded-3xl bg-gradient-to-r from-cyan-50 via-sky-50 to-indigo-50 border border-cyan-200 shadow-sm space-y-6 relative overflow-hidden">
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-cyan-600 via-indigo-600 to-purple-600 p-[3px] shadow-md shrink-0">
-            <div className="w-full h-full bg-white rounded-[13px] flex items-center justify-center">
-              <UserCheck className="w-10 h-10 text-cyan-600" />
-            </div>
+          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-500 p-[3px] shadow-lg shrink-0 overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/founder.jpg"
+              alt="Shahid Khan - Founder & Web Developer of RawByte Tools"
+              className="w-full h-full object-cover rounded-[21px]"
+            />
           </div>
 
           <div className="space-y-3 text-center sm:text-left flex-1">
