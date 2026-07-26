@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ALL_TOOLS } from '@/lib/utils/constants';
 import ThemeToggle from './ThemeToggle';
-import { Wrench, Image as ImageIcon, FileText, Search, Menu, X, ChevronDown } from 'lucide-react';
+import { Wrench, Image as ImageIcon, FileText, Search, Menu, X, ChevronDown, GraduationCap } from 'lucide-react';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -111,6 +111,14 @@ export default function Navbar() {
                 </div>
               )}
             </div>
+
+            <Link
+              href="/exam-form-guide"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 transition-all shadow-2xs"
+            >
+              <GraduationCap className="w-4 h-4 text-amber-700" />
+              Exam Form Guide
+            </Link>
 
             <Link
               href="/about"
