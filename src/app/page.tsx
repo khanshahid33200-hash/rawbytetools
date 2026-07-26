@@ -48,11 +48,48 @@ export default function HomePage() {
           </div>
           <input
             type="text"
-            placeholder="Search tools (e.g. compress pdf, resize image, convert webp...)"
+            placeholder="Search tools (e.g. compress pdf, photo to 50kb, signature resizer...)"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border border-slate-300 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/20 shadow-md transition-all"
           />
+        </div>
+      </section>
+
+      {/* Student & Competitive Exam Form Helper Banner */}
+      <section className="max-w-5xl mx-auto p-8 rounded-3xl bg-gradient-to-r from-amber-500/10 via-amber-100/50 to-orange-500/10 border border-amber-200 shadow-sm space-y-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-2 text-center md:text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">
+              🎓 Student & Competitive Exam Special
+            </div>
+            <h2 className="text-2xl font-extrabold text-slate-900">
+              Filling UPSC, SSC, NEET, JEE, GATE or Banking Forms?
+            </h2>
+            <p className="text-xs text-slate-700 leading-relaxed max-w-2xl">
+              Easily compress photos to 20KB-50KB, signatures to 10KB-20KB, and marksheets to 200KB PDF without losing readability. 100% free with exact dimensions (200x230px, 140x60px)!
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2 shrink-0">
+            <Link
+              href="/image-compressor"
+              className="px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md transition-all text-center"
+            >
+              Compress Photo (20-50KB)
+            </Link>
+            <Link
+              href="/image-resizer"
+              className="px-4 py-2.5 rounded-xl bg-white hover:bg-amber-50 text-slate-900 font-bold text-xs border border-amber-300 shadow-xs transition-all text-center"
+            >
+              Resize Photo & Signature
+            </Link>
+            <Link
+              href="/pdf-compressor"
+              className="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md transition-all text-center"
+            >
+              Marksheet PDF (Under 200KB)
+            </Link>
+          </div>
         </div>
       </section>
 

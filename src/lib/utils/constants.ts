@@ -252,5 +252,13 @@ export const GENERAL_FAQS: FAQItem[] = [
   {
     question: 'Can I process files offline or on mobile devices?',
     answer: 'Yes! Because all processing runs client-side in the browser, RawByte Tools is fully responsive and works smoothly on desktop, tablet, and mobile smartphones.'
+  },
+  {
+    question: 'How do I compress my passport photo & signature for competitive exam forms (UPSC, SSC, NEET, JEE)?',
+    answer: 'Simply open the Image Compressor or Image Resizer tool. Click on the 🎓 Student Presets (e.g. Passport Photo 20-50 KB, Signature 10-20 KB, or 200x230 px). The tool automatically resizes and compresses your file to meet strict exam portal requirements.'
+  },
+  {
+    question: 'Can I compress 10th/12th marksheets & certificate PDFs under 200 KB?',
+    answer: 'Yes! Upload your marksheet or certificate into our PDF Compressor, select the "10th/12th Marksheet PDF (< 200 KB)" preset or type 200 KB, and download the compressed PDF instantly with crisp text legibility.'
   }
 ];

@@ -146,6 +146,39 @@ export default function ImageCompressorUI() {
               </div>
             </div>
 
+            {/* Student Exam Presets Banner */}
+            <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-bold text-amber-800">🎓 Competitive Exam Form Photo & Signature Limits:</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setOptions({ ...options, targetSize: 40, targetUnit: 'KB' })}
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-800 border border-amber-300 hover:bg-amber-100 transition-all"
+                >
+                  📸 Passport Photo (20-50 KB)
+                </button>
+                <button
+                  onClick={() => setOptions({ ...options, targetSize: 15, targetUnit: 'KB' })}
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-800 border border-amber-300 hover:bg-amber-100 transition-all"
+                >
+                  ✍️ Signature (10-20 KB)
+                </button>
+                <button
+                  onClick={() => setOptions({ ...options, targetSize: 100, targetUnit: 'KB' })}
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-800 border border-amber-300 hover:bg-amber-100 transition-all"
+                >
+                  📄 NEET / JEE Photo (Under 100 KB)
+                </button>
+                <button
+                  onClick={() => setOptions({ ...options, targetSize: 180, targetUnit: 'KB' })}
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-800 border border-amber-300 hover:bg-amber-100 transition-all"
+                >
+                  📜 Marksheet / ID Photo (Under 200 KB)
+                </button>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Target File Size in KB or MB */}
               <div className="space-y-2 lg:col-span-2">

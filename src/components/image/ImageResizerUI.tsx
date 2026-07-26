@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import FileUploader from '@/components/common/FileUploader';
 import DownloadBar from '@/components/common/DownloadBar';
 import ProcessingProgress from '@/components/common/ProcessingProgress';
 import { ProcessedFileItem, ResizeOptions } from '@/types/file';
 import { resizeImage } from '@/lib/image/resizer';
-import { Settings, Maximize2, Lock, Unlock, Zap } from 'lucide-react';
+import { Settings, Lock, Unlock, Zap, GraduationCap } from 'lucide-react';
 
 export default function ImageResizerUI() {
   const [files, setFiles] = useState<ProcessedFileItem[]>([]);
@@ -37,7 +37,6 @@ export default function ImageResizerUI() {
 
     setFiles(items);
 
-    // Read first file dimensions for auto-populating inputs
     if (selectedFiles.length > 0) {
       const img = new Image();
       const url = URL.createObjectURL(selectedFiles[0]);
@@ -78,6 +77,16 @@ export default function ImageResizerUI() {
     } else {
       setOptions({ ...options, height: val });
     }
+  };
+
+  const applyExamPreset = (w: number, h: number) => {
+    setOptions({
+      mode: 'pixels',
+      width: w,
+      height: h,
+      percentage: 50,
+      maintainAspectRatio: false
+    });
   };
 
   const startResizing = async () => {
@@ -136,6 +145,13 @@ export default function ImageResizerUI() {
 
   const isCompleted = files.length > 0 && files.every((f) => f.status === 'success');
 
+  const examPresets = [
+    { name: 'Govt Exam Passport Photo', w: 200, h: 230, tag: 'UPSC / SSC / IBPS' },
+    { name: 'Govt Exam Signature', w: 140, h: 60, tag: 'Standard Signature' },
+    { name: 'NTA / NEET Passport Photo', w: 300, h: 300, tag: 'NEET / JEE' },
+    { name: 'High-Res Passport Photo', w: 413, h: 531, tag: '3.5 x 4.5 cm' }
+  ];
+
   return (
     <div className="w-full space-y-8">
       {files.length === 0 ? (
@@ -143,17 +159,46 @@ export default function ImageResizerUI() {
           onFilesSelected={handleFilesSelected}
           acceptTypes={['image/*']}
           acceptExtensions={['.jpg', '.jpeg', '.png', '.webp']}
-          title="Upload Images to Resize"
-          subtitle="Resize image dimensions by pixels (W x H) or percentage scale."
+          multiple={true}
+          title="Upload Photo or Signature to Resize for Exam Forms"
+          subtitle="Resize passport photos & signatures to exact competitive exam dimensions (UPSC, SSC, NEET, JEE, GATE, Banking)."
         />
       ) : (
         <div className="space-y-6">
+          {/* Student Exam Presets Banner */}
+          <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 space-y-2">
+            <div className="flex items-center gap-2">
+              <GraduationCap className="w-5 h-5 text-amber-700" />
+              <h4 className="text-xs font-bold uppercase tracking-wider text-amber-800">
+                Student & Competitive Exam Form Presets
+              </h4>
+            </div>
+            <p className="text-xs text-amber-800">
+              One-click standard photo & signature dimensions for UPSC, SSC, NEET, JEE, Railway, and IBPS online application forms:
+            </p>
+            <div className="flex flex-wrap gap-2 pt-1">
+              {examPresets.map((preset) => (
+                <button
+                  key={preset.name}
+                  onClick={() => applyExamPreset(preset.w, preset.h)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                    options.width === preset.w && options.height === preset.h
+                      ? 'bg-amber-600 text-white border-amber-600 shadow-2xs'
+                      : 'bg-white text-slate-800 border-amber-300 hover:bg-amber-100'
+                  }`}
+                >
+                  {preset.name} ({preset.w} × {preset.h} px)
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Controls Panel */}
           <div className="p-6 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm space-y-6">
             <div className="flex items-center justify-between border-b border-slate-200 pb-4">
               <div className="flex items-center gap-2">
                 <Settings className="w-5 h-5 text-cyan-600" />
-                <h3 className="text-base font-semibold text-slate-900">Resize Options</h3>
+                <h3 className="text-base font-semibold text-slate-900">Custom Dimensions</h3>
               </div>
 
               {/* Mode Toggle */}
@@ -237,13 +282,13 @@ export default function ImageResizerUI() {
                   onClick={handleReset}
                   className="px-4 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-xs text-slate-700 transition-colors"
                 >
-                  Clear
+                  Clear Queue
                 </button>
                 <button
                   onClick={startResizing}
                   className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold text-xs shadow-md transition-all"
                 >
-                  <Zap className="w-4 h-4" /> Resize Images Now
+                  <Zap className="w-4 h-4" /> Resize Photos Now
                 </button>
               </div>
             )}
@@ -258,7 +303,7 @@ export default function ImageResizerUI() {
             />
           )}
 
-          {isCompleted && <DownloadBar files={files} onReset={handleReset} zipFilename="resized_images.zip" />}
+          {isCompleted && <DownloadBar files={files} onReset={handleReset} zipFilename="resized_exam_photos.zip" />}
         </div>
       )}
     </div>

@@ -134,6 +134,51 @@ export default function PdfCompressorUI() {
               </div>
             </div>
 
+            {/* Student Exam PDF Presets Banner */}
+            <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-bold text-amber-800">🎓 Student & Competitive Exam PDF Limits:</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => {
+                    setTargetSize(180);
+                    setTargetUnit('KB');
+                  }}
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-800 border border-amber-300 hover:bg-amber-100 transition-all"
+                >
+                  📜 10th/12th Marksheet PDF (Under 200 KB)
+                </button>
+                <button
+                  onClick={() => {
+                    setTargetSize(280);
+                    setTargetUnit('KB');
+                  }}
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-800 border border-amber-300 hover:bg-amber-100 transition-all"
+                >
+                  📑 Caste / Domicile Certificate (Under 300 KB)
+                </button>
+                <button
+                  onClick={() => {
+                    setTargetSize(90);
+                    setTargetUnit('KB');
+                  }}
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-800 border border-amber-300 hover:bg-amber-100 transition-all"
+                >
+                  🆔 Aadhaar / ID Card PDF (Under 100 KB)
+                </button>
+                <button
+                  onClick={() => {
+                    setTargetSize(450);
+                    setTargetUnit('KB');
+                  }}
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-800 border border-amber-300 hover:bg-amber-100 transition-all"
+                >
+                  🎓 Degree / Resume PDF (Under 500 KB)
+                </button>
+              </div>
+            </div>
+
             {/* Target KB / MB Input Section */}
             <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-3">
               <div className="flex justify-between items-center">
