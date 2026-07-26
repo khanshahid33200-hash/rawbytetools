@@ -7,7 +7,7 @@ import ProcessingProgress from '@/components/common/ProcessingProgress';
 import { ProcessedFileItem, CompressionOptions } from '@/types/file';
 import { compressImage } from '@/lib/image/compressor';
 import { formatBytes, calculateSavings } from '@/lib/utils/formatters';
-import { Settings, Sliders, Zap } from 'lucide-react';
+import { Settings, Zap, Plus, Trash2 } from 'lucide-react';
 
 export default function ImageCompressorUI() {
   const [files, setFiles] = useState<ProcessedFileItem[]>([]);
@@ -24,7 +24,7 @@ export default function ImageCompressorUI() {
 
   const handleFilesSelected = (selectedFiles: File[]) => {
     const items: ProcessedFileItem[] = selectedFiles.map((file, idx) => ({
-      id: `${Date.now()}_${idx}`,
+      id: `${Date.now()}_${Math.random()}_${idx}`,
       file,
       name: file.name,
       originalSize: file.size,
@@ -33,7 +33,16 @@ export default function ImageCompressorUI() {
       status: 'idle',
       progress: 0
     }));
-    setFiles(items);
+    setFiles((prev) => [...prev, ...items]);
+  };
+
+  const removeFile = (id: string) => {
+    setFiles((prev) => {
+      const target = prev.find((f) => f.id === id);
+      if (target?.previewUrl) URL.revokeObjectURL(target.previewUrl);
+      if (target?.resultUrl) URL.revokeObjectURL(target.resultUrl);
+      return prev.filter((f) => f.id !== id);
+    });
   };
 
   const startCompression = async () => {
@@ -85,6 +94,16 @@ export default function ImageCompressorUI() {
 
   const isCompleted = files.length > 0 && files.every((f) => f.status === 'success');
 
+  const presetTargetSizes = [
+    { size: 50, unit: 'KB' },
+    { size: 100, unit: 'KB' },
+    { size: 200, unit: 'KB' },
+    { size: 500, unit: 'KB' },
+    { size: 1, unit: 'MB' },
+    { size: 2, unit: 'MB' },
+    { size: 5, unit: 'MB' }
+  ] as const;
+
   return (
     <div className="w-full space-y-8">
       {files.length === 0 ? (
@@ -92,48 +111,66 @@ export default function ImageCompressorUI() {
           onFilesSelected={handleFilesSelected}
           acceptTypes={['image/*']}
           acceptExtensions={['.jpg', '.jpeg', '.png', '.webp']}
-          title="Upload Images to Compress"
-          subtitle="Compress JPG, PNG, WEBP images to specific file sizes (KB/MB) in browser."
+          multiple={true}
+          title="Upload Images to Compress (Batch Mode Supported)"
+          subtitle="Select or drop multiple JPG, PNG, WEBP images. Type target size in KB or MB."
         />
       ) : (
         <div className="space-y-6">
           {/* Options Control Panel */}
           <div className="p-6 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm space-y-6">
-            <div className="flex items-center gap-2 border-b border-slate-200 pb-4">
-              <Settings className="w-5 h-5 text-cyan-600" />
-              <h3 className="text-base font-semibold text-slate-900">Compression Settings</h3>
+            <div className="flex items-center justify-between border-b border-slate-200 pb-4">
+              <div className="flex items-center gap-2">
+                <Settings className="w-5 h-5 text-cyan-600" />
+                <h3 className="text-base font-semibold text-slate-900">
+                  Batch Compression Settings ({files.length} {files.length === 1 ? 'image' : 'images'})
+                </h3>
+              </div>
+
+              {/* Add More Images Button */}
+              <div>
+                <button
+                  onClick={() => document.getElementById('add-more-images-input')?.click()}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-50 hover:bg-cyan-100 border border-cyan-200 text-xs font-semibold text-cyan-700 transition-all"
+                >
+                  <Plus className="w-4 h-4" /> Add More Images
+                </button>
+                <input
+                  id="add-more-images-input"
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => e.target.files && handleFilesSelected(Array.from(e.target.files))}
+                />
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Quality Slider */}
-              <div className="space-y-2">
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-700 font-medium">Image Quality</span>
-                  <span className="text-cyan-600 font-bold">{Math.round(options.quality * 100)}%</span>
+              {/* Target File Size in KB or MB */}
+              <div className="space-y-2 lg:col-span-2">
+                <div className="flex justify-between items-center">
+                  <label className="block text-xs font-medium text-slate-700">
+                    Type Target Size in KB or MB (Optional)
+                  </label>
+                  {options.targetSize && (
+                    <button
+                      onClick={() => setOptions({ ...options, targetSize: undefined })}
+                      className="text-[11px] text-cyan-600 hover:underline"
+                    >
+                      Clear Target Size
+                    </button>
+                  )}
                 </div>
-                <input
-                  type="range"
-                  min="0.1"
-                  max="1.0"
-                  step="0.05"
-                  value={options.quality}
-                  onChange={(e) => setOptions({ ...options, quality: parseFloat(e.target.value) })}
-                  className="w-full h-2 rounded-lg bg-slate-200 accent-cyan-600 cursor-pointer"
-                />
-              </div>
-
-              {/* Target File Size */}
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-slate-700">Target File Size (Optional)</label>
                 <div className="flex gap-2">
                   <input
                     type="number"
-                    placeholder="e.g. 200"
-                    value={options.targetSize || ''}
+                    placeholder="Type size, e.g. 50, 100, 200, 500"
+                    value={options.targetSize !== undefined ? options.targetSize : ''}
                     onChange={(e) =>
                       setOptions({
                         ...options,
-                        targetSize: e.target.value ? parseFloat(e.target.value) : undefined
+                        targetSize: e.target.value !== '' ? parseFloat(e.target.value) : undefined
                       })
                     }
                     className="flex-1 px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
@@ -141,44 +178,80 @@ export default function ImageCompressorUI() {
                   <select
                     value={options.targetUnit}
                     onChange={(e) => setOptions({ ...options, targetUnit: e.target.value as 'KB' | 'MB' })}
-                    className="px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 focus:outline-none"
+                    className="px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 font-bold focus:outline-none"
                   >
                     <option value="KB">KB</option>
                     <option value="MB">MB</option>
                   </select>
                 </div>
+
+                {/* Quick Presets */}
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  <span className="text-[11px] text-slate-500 self-center mr-1">Presets:</span>
+                  {presetTargetSizes.map((p) => (
+                    <button
+                      key={`${p.size}_${p.unit}`}
+                      onClick={() => setOptions({ ...options, targetSize: p.size, targetUnit: p.unit })}
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all ${
+                        options.targetSize === p.size && options.targetUnit === p.unit
+                          ? 'bg-cyan-600 text-white border-cyan-600 shadow-2xs'
+                          : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
+                      }`}
+                    >
+                      {p.size} {p.unit}
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              {/* Format Selection */}
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-slate-700">Output Format</label>
-                <select
-                  value={options.format}
-                  onChange={(e) => setOptions({ ...options, format: e.target.value as any })}
-                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
-                >
-                  <option value="original">Keep Original Format</option>
-                  <option value="jpeg">Convert to JPG</option>
-                  <option value="png">Convert to PNG</option>
-                  <option value="webp">Convert to WEBP</option>
-                </select>
+              {/* Quality Slider & Format */}
+              <div className="space-y-4">
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-700 font-medium">Visual Quality Scale</span>
+                    <span className="text-cyan-600 font-bold">{Math.round(options.quality * 100)}%</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0.1"
+                    max="1.0"
+                    step="0.05"
+                    value={options.quality}
+                    onChange={(e) => setOptions({ ...options, quality: parseFloat(e.target.value) })}
+                    className="w-full h-2 rounded-lg bg-slate-200 accent-cyan-600 cursor-pointer"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="block text-xs font-medium text-slate-700">Output Format</label>
+                  <select
+                    value={options.format}
+                    onChange={(e) => setOptions({ ...options, format: e.target.value as any })}
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-cyan-500"
+                  >
+                    <option value="original">Keep Original Format</option>
+                    <option value="jpeg">Convert to JPG</option>
+                    <option value="png">Convert to PNG</option>
+                    <option value="webp">Convert to WEBP</option>
+                  </select>
+                </div>
               </div>
             </div>
 
             {/* Action Trigger */}
             {!isCompleted && !isProcessing && (
-              <div className="flex justify-end gap-3 pt-2">
+              <div className="flex justify-end gap-3 pt-2 border-t border-slate-200">
                 <button
                   onClick={handleReset}
                   className="px-4 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-xs text-slate-700 transition-colors"
                 >
-                  Clear Files
+                  Clear Queue
                 </button>
                 <button
                   onClick={startCompression}
                   className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold text-xs shadow-md transition-all"
                 >
-                  <Zap className="w-4 h-4" /> Compress Images Now
+                  <Zap className="w-4 h-4" /> Compress {files.length} {files.length === 1 ? 'Image' : 'Images'} Now
                 </button>
               </div>
             )}
@@ -197,14 +270,14 @@ export default function ImageCompressorUI() {
           {/* Download Bar */}
           {isCompleted && <DownloadBar files={files} onReset={handleReset} zipFilename="compressed_images.zip" />}
 
-          {/* Preview Grid */}
+          {/* Image Queue & Preview Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {files.map((item) => {
               const savings = calculateSavings(item.originalSize, item.resultSize || 0);
               return (
                 <div
                   key={item.id}
-                  className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3 relative overflow-hidden"
+                  className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3 relative overflow-hidden group"
                 >
                   <div className="aspect-video rounded-xl bg-slate-100 overflow-hidden relative border border-slate-200 flex items-center justify-center">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -213,6 +286,16 @@ export default function ImageCompressorUI() {
                       alt={item.name}
                       className="max-h-full max-w-full object-contain"
                     />
+
+                    {!isProcessing && !isCompleted && (
+                      <button
+                        onClick={() => removeFile(item.id)}
+                        className="absolute top-2 right-2 p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition-all opacity-80 group-hover:opacity-100"
+                        title="Remove Image"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    )}
                   </div>
 
                   <div>
