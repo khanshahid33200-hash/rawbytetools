@@ -53,8 +53,18 @@ export default function Footer() {
             </span>
           </div>
           <p className="text-xs leading-relaxed text-slate-600">
-            A premium, high-speed online Image and PDF toolkit designed for instant browser-side processing. Privacy guaranteed by default.
+            A 100% free, high-speed Image & PDF toolkit built for students & applicants by <strong>Shahid Khan (Web Developer)</strong>. Zero server uploads.
           </p>
+          <div className="pt-1">
+            <a
+              href="https://rawbyteproduction.online"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-bold text-cyan-600 hover:text-cyan-700 underline"
+            >
+              Main Portal: rawbyteproduction.online ↗
+            </a>
+          </div>
           <p className="text-xs text-slate-500">© {new Date().getFullYear()} RawByte Tools. All rights reserved.</p>
         </div>
 
