@@ -62,8 +62,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="light scroll-smooth">
-      <body className={`${inter.className} bg-white text-slate-900 min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white`}>
+    <html lang="en" className="light scroll-smooth" suppressHydrationWarning>
+      <body
+        className={`${inter.className} bg-white text-slate-900 min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white`}
+        suppressHydrationWarning
+      >
         <ScrollToTop />
         <Navbar />
         <div className="flex-1">{children}</div>
