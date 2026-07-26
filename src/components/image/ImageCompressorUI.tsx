@@ -7,6 +7,7 @@ import ProcessingProgress from '@/components/common/ProcessingProgress';
 import { ProcessedFileItem, CompressionOptions } from '@/types/file';
 import { compressImage } from '@/lib/image/compressor';
 import { formatBytes, calculateSavings } from '@/lib/utils/formatters';
+import Quick50KBCompressorModal from './Quick50KBCompressorModal';
 import { Settings, Zap, Plus, Trash2 } from 'lucide-react';
 
 export default function ImageCompressorUI() {
@@ -14,6 +15,9 @@ export default function ImageCompressorUI() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentProcessingIndex, setCurrentProcessingIndex] = useState(0);
   const [currentProgress, setCurrentProgress] = useState(0);
+
+  // Quick 50KB Modal State
+  const [quickModalOpen, setQuickModalOpen] = useState(false);
 
   const [options, setOptions] = useState<CompressionOptions>({
     targetUnit: 'KB',
@@ -106,6 +110,31 @@ export default function ImageCompressorUI() {
 
   return (
     <div className="w-full space-y-8">
+      {/* Quick 50KB Pop-up Modal Banner */}
+      <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-xs flex items-center justify-center font-extrabold text-lg">
+            ⚡
+          </div>
+          <div>
+            <h4 className="font-extrabold text-sm sm:text-base">Need a Photo Compressed under 50 KB Fast?</h4>
+            <p className="text-xs text-amber-100">Quick 1-Click Pop-up tool for UPSC, SSC, NEET, JEE & Govt Exam Forms!</p>
+          </div>
+        </div>
+        <button
+          onClick={() => setQuickModalOpen(true)}
+          className="px-5 py-2.5 rounded-xl bg-white hover:bg-amber-50 text-slate-900 font-extrabold text-xs shadow-sm transition-all shrink-0"
+        >
+          🚀 Open 50 KB Pop-Up Compressor
+        </button>
+      </div>
+
+      <Quick50KBCompressorModal
+        isOpen={quickModalOpen}
+        onClose={() => setQuickModalOpen(false)}
+        defaultTargetKB={50}
+      />
+
       {files.length === 0 ? (
         <FileUploader
           onFilesSelected={handleFilesSelected}

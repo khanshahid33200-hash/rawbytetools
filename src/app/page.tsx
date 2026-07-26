@@ -4,11 +4,13 @@ import { useState } from 'react';
 import Link from 'next/link';
 import ToolCard from '@/components/common/ToolCard';
 import SEOHead from '@/components/common/SEOHead';
+import Quick50KBCompressorModal from '@/components/image/Quick50KBCompressorModal';
 import { ALL_TOOLS, GENERAL_FAQS } from '@/lib/utils/constants';
 import { Search, Sparkles, ShieldCheck, Zap, Lock, Image as ImageIcon, FileText, ChevronDown } from 'lucide-react';
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [quickModalOpen, setQuickModalOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   const filteredTools = ALL_TOOLS.filter((t) => {
@@ -71,23 +73,17 @@ export default function HomePage() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-2 shrink-0">
+            <button
+              onClick={() => setQuickModalOpen(true)}
+              className="px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-xs shadow-md transition-all text-center flex items-center justify-center gap-1.5"
+            >
+              ⚡ 50 KB Pop-Up Compressor
+            </button>
             <Link
               href="/image-compressor"
-              className="px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md transition-all text-center"
-            >
-              Compress Photo (20-50KB)
-            </Link>
-            <Link
-              href="/image-resizer"
               className="px-4 py-2.5 rounded-xl bg-white hover:bg-amber-50 text-slate-900 font-bold text-xs border border-amber-300 shadow-xs transition-all text-center"
             >
-              Resize Photo & Signature
-            </Link>
-            <Link
-              href="/pdf-compressor"
-              className="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md transition-all text-center"
-            >
-              Marksheet PDF (Under 200KB)
+              Full Image Compressor
             </Link>
           </div>
         </div>
