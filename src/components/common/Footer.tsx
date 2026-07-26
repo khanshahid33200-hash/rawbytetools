@@ -49,13 +49,13 @@ export default function Footer() {
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <span className="text-xl font-bold bg-gradient-to-r from-cyan-600 to-indigo-600 bg-clip-text text-transparent">
-              RauByte Tools
+              RawByte Tools
             </span>
           </div>
           <p className="text-xs leading-relaxed text-slate-600">
             A premium, high-speed online Image and PDF toolkit designed for instant browser-side processing. Privacy guaranteed by default.
           </p>
-          <p className="text-xs text-slate-500">© {new Date().getFullYear()} RauByte Tools. All rights reserved.</p>
+          <p className="text-xs text-slate-500">© {new Date().getFullYear()} RawByte Tools. All rights reserved.</p>
         </div>
 
         {/* Image Tools */}

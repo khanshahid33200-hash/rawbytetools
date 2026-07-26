@@ -126,7 +126,7 @@ export default function HomePage() {
           {/* Why Choose Us */}
           <section className="max-w-7xl mx-auto p-10 rounded-3xl bg-slate-50 border border-slate-200 space-y-8">
             <div className="text-center space-y-2 max-w-2xl mx-auto">
-              <h2 className="text-2xl font-bold text-slate-900">Why Professionals Choose RauByte Tools</h2>
+              <h2 className="text-2xl font-bold text-slate-900">Why Professionals Choose RawByte Tools</h2>
               <p className="text-xs text-slate-500">Built for maximum performance, uncompromising privacy, and pure simplicity</p>
             </div>
 

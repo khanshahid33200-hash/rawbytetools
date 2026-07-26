@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import SEOHead from '@/components/common/SEOHead';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy - RauByte Tools',
-  description: 'RauByte Tools Privacy Policy. 100% client-side file processing guaranteed.'
+  title: 'Privacy Policy - RawByte Tools',
+  description: 'RawByte Tools Privacy Policy. 100% client-side file processing guaranteed.'
 };
 
 export default function PrivacyPage() {
@@ -14,7 +14,7 @@ export default function PrivacyPage() {
         <h1 className="text-3xl font-bold text-slate-900">Privacy Policy</h1>
         <div className="p-8 rounded-3xl bg-slate-50 border border-slate-200 space-y-4 text-xs text-slate-700 leading-relaxed">
           <p>
-            At RauByte Tools, accessible from raubytetools.com, your privacy is our top priority.
+            At RawByte Tools, accessible from rawbytetools.com, your privacy is our top priority.
           </p>
 
           <h3 className="text-sm font-bold text-slate-900">1. Client-Side Processing</h3>

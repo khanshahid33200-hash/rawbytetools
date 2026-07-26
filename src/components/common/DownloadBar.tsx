@@ -12,7 +12,7 @@ interface DownloadBarProps {
   zipFilename?: string;
 }
 
-export default function DownloadBar({ files, onReset, zipFilename = 'raubyte_processed_files.zip' }: DownloadBarProps) {
+export default function DownloadBar({ files, onReset, zipFilename = 'rawbyte_processed_files.zip' }: DownloadBarProps) {
   const [isZipping, setIsZipping] = useState(false);
 
   const completedFiles = files.filter((f) => f.status === 'success' && f.resultBlob);

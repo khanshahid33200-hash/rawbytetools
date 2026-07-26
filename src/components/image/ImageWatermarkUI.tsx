@@ -13,7 +13,7 @@ export default function ImageWatermarkUI() {
 
   const [options, setOptions] = useState<WatermarkOptions>({
     type: 'text',
-    text: 'RauByte Tools',
+    text: 'RawByte Tools',
     opacity: 0.8,
     position: 'center',
     scale: 0.3,

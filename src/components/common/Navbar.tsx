@@ -27,7 +27,7 @@ export default function Navbar() {
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-bold bg-gradient-to-r from-cyan-600 via-sky-600 to-indigo-600 bg-clip-text text-transparent tracking-tight">
-                RauByte<span className="text-slate-900 font-medium">Tools</span>
+                RawByte<span className="text-slate-900 font-medium">Tools</span>
               </span>
               <span className="text-[10px] text-slate-500 tracking-wider font-semibold -mt-1">
                 100% PRIVATE BROWSER UTILITIES

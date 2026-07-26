@@ -1,7 +1,7 @@
 import { ToolItem, FAQItem } from '@/types/tools';
 
-export const SITE_NAME = 'RauByte Tools';
-export const SITE_URL = 'https://raubytetools.com';
+export const SITE_NAME = 'RawByte Tools';
+export const SITE_URL = 'https://rawbytetools.com';
 export const SITE_DESCRIPTION = 'Free, fast, 100% private browser-side Image and PDF toolkit. Compress, edit, convert, merge, split, watermark images and PDFs without server uploads.';
 
 export const ALL_TOOLS: ToolItem[] = [
@@ -238,7 +238,7 @@ export const GENERAL_FAQS: FAQItem[] = [
     answer: 'No! All image compression, resizing, conversion, cropping, and PDF processing happens directly inside your web browser using HTML5 Canvas and WebAssembly. Your files never leave your computer.'
   },
   {
-    question: 'Is RauByte Tools completely free to use?',
+    question: 'Is RawByte Tools completely free to use?',
     answer: 'Yes, 100% free with no hidden fees, subscriptions, or watermarks added to your processed output files.'
   },
   {
@@ -251,6 +251,6 @@ export const GENERAL_FAQS: FAQItem[] = [
   },
   {
     question: 'Can I process files offline or on mobile devices?',
-    answer: 'Yes! Because all processing runs client-side in the browser, RauByte Tools is fully responsive and works smoothly on desktop, tablet, and mobile smartphones.'
+    answer: 'Yes! Because all processing runs client-side in the browser, RawByte Tools is fully responsive and works smoothly on desktop, tablet, and mobile smartphones.'
   }
 ];

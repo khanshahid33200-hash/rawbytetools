@@ -186,7 +186,7 @@ export default function AdminDashboardClient() {
                 <label className="block text-slate-700 font-medium">Site Title</label>
                 <input
                   type="text"
-                  defaultValue="RauByte Tools"
+                  defaultValue="RawByte Tools"
                   className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900"
                 />
               </div>

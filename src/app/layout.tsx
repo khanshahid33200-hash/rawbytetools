@@ -25,8 +25,8 @@ export const metadata: Metadata = {
     'watermark image',
     'browser side image tools'
   ],
-  authors: [{ name: 'RauByte Tools' }],
-  creator: 'RauByte Tools',
+  authors: [{ name: 'RawByte Tools' }],
+  creator: 'RawByte Tools',
   openGraph: {
     type: 'website',
     locale: 'en_US',

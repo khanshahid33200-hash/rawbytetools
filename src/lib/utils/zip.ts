@@ -4,7 +4,7 @@ import { ProcessedFileItem } from '@/types/file';
 
 export async function downloadFilesAsZip(
   files: ProcessedFileItem[],
-  zipFilename: string = 'raubyte_tools_processed.zip'
+  zipFilename: string = 'rawbyte_tools_processed.zip'
 ): Promise<void> {
   const zip = new JSZip();
 
